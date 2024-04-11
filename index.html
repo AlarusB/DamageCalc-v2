@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Damage Calc</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="style.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script src="script.js" async defer></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Balthazar&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <div class="flex">
+            <form class="damageFrame">
+                <h2>Player Info</h2>
+                <label for="level">Level:</label>
+                <input type="number" id="level" name="level" value="1" min="1" max="1000" required>
+
+                <label for="vitality">Vitality:</label>
+                <input type="number" id="vitality" value="0" min="0" max="4000" name="vitality" required>
+                
+                <label for="power">Power:</label>
+                <input type="number" id="power" value="0" name="power" required>
+
+                <div id="intensityDisplay">
+                    <label for="intensity">Intensity:</label>
+                    <input type="number" id="intensity" value="0" name="intensity">
+                </div>
+
+                <h2>Magic Info</h2>
+                <label for="magic">Choose a magic:</label>
+                <select id="magic" name="magic">
+                  <option value="acid">Acid</option>
+                  <option value="ash">Ash</option>
+                  <option value="crystal">Crystal</option>
+                  <option value="earth">Earth</option>
+                  <option value="explosion">Explosion</option>
+                  <option value="fire">Fire</option>
+                  <option value="glass">Glass</option>
+                  <option value="ice">Ice</option>
+                  <option value="light">Light</option>
+                  <option value="lightning">Lightning</option>
+                  <option value="magma">Magma</option>
+                  <option value="metal">Metal</option>
+                  <option value="plasma">Plasma</option>
+                  <option value="poison">Poison</option>
+                  <option value="sand">Sand</option>
+                  <option value="shadow">Shadow</option>
+                  <option value="snow">Snow</option>
+                  <option value="water">Water</option>
+                  <option value="wind">Wind</option>
+                  <option value="wood">Wood</option>
+                </select>
+              
+                <label for="spell">Spell:</label>
+                <select id="spell" name="spell">
+                  <option value="blast">Blast</option>
+                  <option value="explosion">Explosion</option>
+                  <option value="beam">Beam</option>
+                  <option value="snare">Snare</option>
+                  <option value="javelin">Javelin</option>
+                  <option value="pulsar">Pulsar</option>
+                  <option value="surge">Surge</option>
+                </select>
+
+                <div id="amountDisplay">
+                    <label for="amount">Amount:</label>
+                    <input type="number" id="amount" min="1" max="20" name="amount">
+                </div>
+
+                <div id="shapeDisplay">
+                    <label for="shape">Shape:</label>
+                    <input type="text" id="shape" name="shape">
+                </div>
+
+                <div id="ultimateArtDisplay">
+                    <label for="ultimateArt">Ultimate Art:</label>
+                    <input type="checkbox" id="ultimateArt" name="ultimateArt">
+                </div>
+
+                <label for="charge">Charge %:</label>
+                <input type="number" id="charge" value="0" step="0.01" min="0" max="1" name="charge">
+
+                <h2>Target Info</h2>
+                <label for="targetStatus">Target Status:</label>
+                <select id="targetStatus" name="targetStatus" required>
+                    <option value="none">None</option>
+                    <option value="bleeding">Bleeding</option>
+                    <option value="burning">Burning</option>
+                    <option value="scorched">Scorched</option>
+                    <option value="melting">Melting</option>
+                    <option value="corroding">Corroding</option>
+                    <option value="poisoned">Poisoned</option>
+                    <option value="singed">Singed</option>
+                    <option value="scalded">Scalded</option>
+                    <option value="freezing">Freezing</option>
+                    <option value="charred">Charred</option>
+                    <option value="soaked">Soaked</option>
+                    <option value="crystallized">Crystallized x3</option>
+                    <option value="drained">Drained</option>
+                    <option value="seared">Seared</option>
+                    <option value="blinded">Blinded x5</option>
+                    <option value="sandy">Sandy</option>
+                    <option value="snowy">Snowy</option>
+                    <option value="frozen">Frozen</option>
+                    <option value="petrified">Petrified</option>
+                    <option value="paralyzed">Paralyzed</option>
+                    <option value="sweating">Sweating</option>
+                </select>
+
+                <!--<input type="submit" value="Submit">-->
+            </form>
+            <div class="results damageFrame">
+                <h2>Base Output</h2>
+                <p>
+                    Base Damage: <span id="output_base_damage">0</span>
+                </p>
+                <p>
+                    DoT Damage: <span id="output_dot_damage">0</span>
+                </p>
+                <p>
+                    Damage w/ DoT: <span id="output_total_damage">0</span>
+                </p>
+                <h2>Synergy</h2>
+                <p>
+                    Base Damage: <span id="output_synergy_damage">0</span>
+                </p>
+                <p>
+                    DoT Damage: <span id="output_synergy_dot_damage">0</span>
+                </p>
+                <p>
+                    Damage w/ DoT: <span id="output_synergy_total_damage">0</span>
+                </p>
+            </div>
+        </div>
+    </body>
+</html>
