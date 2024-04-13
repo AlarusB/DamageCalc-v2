@@ -67,14 +67,14 @@ function calculateVitalityReduction(level, vitality) {
     return Math.sqrt(baseHealth/vitHealth);
 }
 
-function findDoT(magic)
+function findStatus(magic)
 {
     if (magic.statusEffects.length > 0)
     {
         for (const status of magic.statusEffects)
         {
             const statusInfo = effects[status.name];
-            if (statusInfo.type == 'DoT')
+            if (statusInfo)
             {
                 return status.name;
             }
@@ -85,16 +85,21 @@ function findDoT(magic)
 
 function calculateDoT(params)
 {
-    const { damage, intensity, dotName } = params;
-    const statusInfo = effects[dotName];
+    const { damage, intensity, statusName } = params;
+    let dotDamage = 0;
+    const statusInfo = effects[statusName];
     const INTENSITY_FOR_TICK = 28;
-    return Math.floor(damage * statusInfo.damagePerTick) * statusInfo.duration;
+    if (statusInfo.type == 'DoT')
+    {
+        dotDamage = Math.floor(damage * statusInfo.damagePerTick) * statusInfo.duration;
+    }
+    return dotDamage;
 }
 
-function calculateSynergy(magic, targetStatus, existingDoT)
+function calculateSynergy(magic, targetStatus, existingStatus)
 {
     let synergyDamage = 1;
-    let statusResult = existingDoT;
+    let statusResult = existingStatus;
     
     let synergyStore = [];
 
@@ -103,7 +108,11 @@ function calculateSynergy(magic, targetStatus, existingDoT)
         if (targetStatus == synergy.name)
         {
             synergyDamage = synergy.multiplier;
-            if (synergy.replaceWith != undefined)
+            if (synergy.replaceWith == null && synergy.name == existingStatus)
+            {
+                statusResult = "none";
+            }
+            else if (synergy.replaceWith != undefined)
             {
                 statusResult = synergy.replaceWith;
             }
@@ -136,17 +145,17 @@ function updateResult()
     const vitReduction = calculateVitalityReduction(params.level, params.vitality);
     const spellDamage = spells[params.spell](params);
     const attackDamage = Math.floor(spellDamage * vitReduction);
-    const dotName = findDoT(params.magic)
-    const dotDamage = calculateDoT({ damage: attackDamage * vitReduction, intensity: params.intensity, dotName: dotName});
+    const statusName = findStatus(params.magic);
+    const dotDamage = calculateDoT({ damage: attackDamage * vitReduction, intensity: params.intensity, statusName: statusName});
 
-    const [synergyDamage, statusResult] = calculateSynergy(params.magic, params.targetStatus, dotName);
+    const [synergyDamage, statusResult] = calculateSynergy(params.magic, params.targetStatus, statusName);
 
     $('#output_base_damage').text(attackDamage);
-    $('#output_dot_damage').text(dotDamage + " (" + dotName + ")");
+    $('#output_dot_damage').text(dotDamage + " (" + statusName + ")");
     $('#output_total_damage').text(attackDamage + dotDamage);
 
     let fullSynDamage = Math.floor(attackDamage * synergyDamage);
-    const newDoTDamage = calculateDoT({ damage: fullSynDamage, intensity: params.intensity, dotName: statusResult});
+    const newDoTDamage = calculateDoT({ damage: fullSynDamage, intensity: params.intensity, statusName: statusResult});
 
 
     $('#output_synergy_damage').text(fullSynDamage);
