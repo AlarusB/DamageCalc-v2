@@ -7,8 +7,8 @@ const stats = {
             { damageThreshold: 0, name: "corroding" }
         ],
         synergies: [
-            {name: "frozen", multiplier: 1.2, replaceWith: null},
-            {name: "petrified", multiplier: 1.2, replaceWith: null},
+            {name: "frozen", multiplier: 1.2, replaceWith: "clear"},
+            {name: "petrified", multiplier: 1.2, replaceWith: "clear"},
             {name: "scorched", multiplier: 1.175},
             {name: "seared", multiplier: 1.175},
             {name: "bleeding", multiplier: 1.1},
@@ -17,9 +17,9 @@ const stats = {
             {name: "poisoned", multiplier: 1.1},
             {name: "charred", multiplier: 1.1},
             {name: "poisoned", multiplier: 1.1},
-            {name: "freezing", multiplier: 1, replaceWith: null},
+            {name: "freezing", multiplier: 1, replaceWith: "clear"},
             {name: "soaked", multiplier: 0.9},
-            {name: "sandy", multiplier: 0.9, replaceWith: null},
+            {name: "sandy", multiplier: 0.9, replaceWith: "clear"},
         ],
     },
     ash: {
@@ -40,9 +40,9 @@ const stats = {
             {name: "melting", multiplier: 1.1},
             {name: "charred", multiplier: 1.1, replaceWith: "petrified"},
             {name: "sandy", multiplier: 1.1},
-            {name: "snowy", multiplier: 1, replaceWith: null},
-            {name: "soaked", multiplier: 0.95, replaceWith: null},
-            {name: "freezing", multiplier: 0.9, replaceWith: null},
+            {name: "snowy", multiplier: 1, replaceWith: "clear"},
+            {name: "soaked", multiplier: 0.95, replaceWith: "clear"},
+            {name: "freezing", multiplier: 0.9, replaceWith: "clear"},
         ]
     },
     crystal: {
@@ -53,7 +53,7 @@ const stats = {
             {damageThreshold: 0, name: "crystallized"}
         ],
         synergies: [
-            {name: "crystallized", multiplier: 1.3, replaceWith: null},
+            {name: "crystallized", multiplier: 1.3, replaceWith: "clear"},
             {name: "frozen", multiplier: 1.1},
             {name: "bleeding", multiplier: 1.1},
             {name: "corroding", multiplier: 1.1},
@@ -69,7 +69,7 @@ const stats = {
             {damageThreshold: 0.33, name: "bleeding"}
         ],
         synergies: [
-            {name: "frozen", multiplier: 1.3, replaceWith: null}, // ???
+            {name: "frozen", multiplier: 1.3, replaceWith: "clear"}, // ???
             {name: "bleeding", multiplier: 1.1},
             {name: "crystallized", multiplier: 1.1},
             {name: "sandy", multiplier: 1.1},
@@ -85,8 +85,8 @@ const stats = {
             {damageThreshold: 0.0, name: "charred"}
         ],
         synergies: [
-            {name: "frozen", multiplier: 1.2, replaceWith: null},
-            {name: "petrified", multiplier: 1.2, replaceWith: null},
+            {name: "frozen", multiplier: 1.2, replaceWith: "clear"},
+            {name: "petrified", multiplier: 1.2, replaceWith: "clear"},
             {name: "scorched", multiplier: 1.175},
             {name: "seared", multiplier: 1.175},
             {name: "bleeding", multiplier: 1.1},
@@ -94,10 +94,10 @@ const stats = {
             {name: "melting", multiplier: 1.1},
             {name: "burning", multiplier: 1.1},
             {name: "scalded", multiplier: 1.1},
-            {name: "freezing", multiplier: 1, replaceWith: null},
-            {name: "snowy", multiplier: 1, replaceWith: null},
+            {name: "freezing", multiplier: 1, replaceWith: "clear"},
+            {name: "snowy", multiplier: 1, replaceWith: "clear"},
             {name: "sandy", multiplier: 0.9},
-            {name: "soaked", multiplier: 0.9, replaceWith: null},
+            {name: "soaked", multiplier: 0.9, replaceWith: "clear"},
         ]
     },
     fire: {
@@ -109,7 +109,7 @@ const stats = {
         ],
         synergies: [
             {name: "charred", multiplier: 1.2, replaceWith: "petrified"},
-            {name: "bleeding", multiplier: 1.2, replaceWith: null},
+            {name: "bleeding", multiplier: 1.2, replaceWith: "clear"},
             {name: "scorched", multiplier: 1.175},
             {name: "seared", multiplier: 1.175},
             {name: "melting", multiplier: 1.1},
@@ -118,9 +118,9 @@ const stats = {
             {name: "petrified", multiplier: 1.1},
             {name: "scalded", multiplier: 1.1},
             {name: "sweating", multiplier: 1.1},
-            {name: "freezing", multiplier: 1, replaceWith: null},
-            {name: "frozen", multiplier: 1, replaceWith: null},
-            {name: "soaked", multiplier: 0.9, replaceWith: null},
+            {name: "freezing", multiplier: 1, replaceWith: "clear"},
+            {name: "frozen", multiplier: 1, replaceWith: "clear"},
+            {name: "soaked", multiplier: 0.9, replaceWith: "clear"},
             {name: "crystallized", multiplier: 0.85},
             {name: "sandy", multiplier: 0.8},
         ]
@@ -150,15 +150,15 @@ const stats = {
 
         ],
         synergies: [
-            {name: "bleeding", multiplier: 1.25, replaceWith: null},
+            {name: "bleeding", multiplier: 1.25, replaceWith: "clear"},
             {name: "frozen", multiplier: 1.2},
             {name: "soaked", multiplier: 1.1, replaceWith: "frozen"},
             {name: "snowy", multiplier: 1.1, replaceWith: "frozen"},
-            {name: "melting", multiplier: 1, replaceWith: null},
-            {name: "corroding", multiplier: 1, replaceWith: null},
+            {name: "melting", multiplier: 1, replaceWith: "clear"},
+            {name: "corroding", multiplier: 1, replaceWith: "clear"},
             {name: "burning", multiplier: 0.9},
             {name: "petrified", multiplier: 0.9},
-            {name: "charred", multiplier: 0.9, replaceWith: null},
+            {name: "charred", multiplier: 0.9, replaceWith: "clear"},
             {name: "scorched", multiplier: 0.8},
             {name: "seared", multiplier: 0.8},
         ]
@@ -184,16 +184,16 @@ const stats = {
             {damageThreshold: 0.33, name: "paralyzed"}
         ],
         synergies: [
-            {name: "frozen", multiplier: 1.3, replaceWith: null}, // ???
-            {name: "bleeding", multiplier: 1.25, replaceWith: null},
-            {name: "sandy", multiplier: 1.2, replaceWith: null},
+            {name: "frozen", multiplier: 1.3, replaceWith: "clear"}, // ???
+            {name: "bleeding", multiplier: 1.25, replaceWith: "clear"},
+            {name: "sandy", multiplier: 1.2, replaceWith: "clear"},
             {name: "scorched", multiplier: 1.175},
             {name: "seared", multiplier: 1.175},
             {name: "soaked", multiplier: 1.1},
             {name: "crystallized", multiplier: 1.1},
             {name: "melting", multiplier: 1.1},
-            {name: "charred", multiplier: 1, replaceWith: null},
-            {name: "petrified", multiplier: 1, replaceWith: null},
+            {name: "charred", multiplier: 1, replaceWith: "clear"},
+            {name: "petrified", multiplier: 1, replaceWith: "clear"},
         ]
     },
     magma: {
@@ -204,9 +204,9 @@ const stats = {
             {damageThreshold: 0.0, name: "melting"}
         ],
         synergies: [
-            {name: "corroding", multiplier: 1.2, replaceWith: null},
-            {name: "petrified", multiplier: 1.2, replaceWith: null},
-            {name: "bleeding", multiplier: 1.2, replaceWith: null},
+            {name: "corroding", multiplier: 1.2, replaceWith: "clear"},
+            {name: "petrified", multiplier: 1.2, replaceWith: "clear"},
+            {name: "bleeding", multiplier: 1.2, replaceWith: "clear"},
             {name: "sweating", multiplier: 1.2,}, // ???
             {name: "scorched", multiplier: 1.175},
             {name: "seared", multiplier: 1.175},
@@ -214,10 +214,10 @@ const stats = {
             {name: "charred", multiplier: 1.1},
             {name: "crystallized", multiplier: 1.1},
             {name: "poisoned", multiplier: 1.1},
-            {name: "poisoned", multiplier: 1, replaceWith: null},
-            {name: "soaked", multiplier: 0.95, replaceWith: null},
-            {name: "freezing", multiplier: 0.95, replaceWith: null},
-            {name: "sandy", multiplier: 0.9, replaceWith: null},
+            {name: "poisoned", multiplier: 1, replaceWith: "clear"},
+            {name: "soaked", multiplier: 0.95, replaceWith: "clear"},
+            {name: "freezing", multiplier: 0.95, replaceWith: "clear"},
+            {name: "sandy", multiplier: 0.9, replaceWith: "clear"},
         ]
     },
     metal: {
@@ -228,7 +228,7 @@ const stats = {
             {damageThreshold: 0.05, name: "bleeding"}
         ],
         synergies: [
-            {name: "frozen", multiplier: 1.2, replaceWith: null},
+            {name: "frozen", multiplier: 1.2, replaceWith: "clear"},
             {name: "crysallized", multiplier: 1.1},
             {name: "sandy", multiplier: 1.1},
             {name: "melting", multiplier: 1.1},
@@ -253,10 +253,10 @@ const stats = {
             {name: "poisoned", multiplier: 1.1},
             {name: "corroding", multiplier: 1.1},
             {name: "petrified", multiplier: 1.1},
-            {name: "bleeding", multiplier: 1.05, replaceWith: null},
-            {name: "frozen", multiplier: 1, replaceWith: null},
-            {name: "soaked", multiplier: 0.95, replaceWith: null},
-            {name: "freezing", multiplier: 0.95, replaceWith: null},
+            {name: "bleeding", multiplier: 1.05, replaceWith: "clear"},
+            {name: "frozen", multiplier: 1, replaceWith: "clear"},
+            {name: "soaked", multiplier: 0.95, replaceWith: "clear"},
+            {name: "freezing", multiplier: 0.95, replaceWith: "clear"},
             {name: "crystallized", multiplier: 0.9},
         ]
     },
@@ -287,7 +287,7 @@ const stats = {
             {name: "burning", multiplier: 1.1},
             {name: "melting", multiplier: 1.1},
             {name: "sweating", multiplier: 1.05},
-            {name: "soaked", multiplier: 0.8, replaceWith: null},
+            {name: "soaked", multiplier: 0.8, replaceWith: "clear"},
             {name: "crystallized", multiplier: 0.8},
         ]
     },
@@ -313,12 +313,12 @@ const stats = {
         synergies: [
             {name: "freezing", multiplier: 1.1, replaceWith: "frozen"},
             {name: "soaked", multiplier: 1.1, replaceWith: "frozen"},
-            {name: "petrified", multiplier: 1, replaceWith: null},   
-            {name: "burning", multiplier: 0.9, replaceWith: null},
-            {name: "melting", multiplier: 0.9, replaceWith: null},
-            {name: "scorched", multiplier: 0.8, replaceWith: null},
-            {name: "seared", multiplier: 0.8, replaceWith: null},
-            {name: "charred", multiplier: 0.8, replaceWith: null},
+            {name: "petrified", multiplier: 1, replaceWith: "clear"},   
+            {name: "burning", multiplier: 0.9, replaceWith: "clear"},
+            {name: "melting", multiplier: 0.9, replaceWith: "clear"},
+            {name: "scorched", multiplier: 0.8, replaceWith: "clear"},
+            {name: "seared", multiplier: 0.8, replaceWith: "clear"},
+            {name: "charred", multiplier: 0.8, replaceWith: "clear"},
         ]
     },
     water: {
@@ -332,16 +332,16 @@ const stats = {
             {name: "freezing", multiplier: 1.1, replaceWith: "frozen"},
             {name: "snowy", multiplier: 1.1},
             {name: "bleeding", multiplier: 1.05},
-            {name: "singed", multiplier: 1, replaceWith: null},
-            {name: "scalded", multiplier: 1, replaceWith: null},
-            {name: "melting", multiplier: 0.9, replaceWith: null},
+            {name: "singed", multiplier: 1, replaceWith: "clear"},
+            {name: "scalded", multiplier: 1, replaceWith: "clear"},
+            {name: "melting", multiplier: 0.9, replaceWith: "clear"},
             {name: "charred", multiplier: 0.9},
             {name: "petrified", multiplier: 0.9},
             {name: "crystallized", multiplier: 0.85},
-            {name: "burning", multiplier: 0.8, replaceWith: null},
+            {name: "burning", multiplier: 0.8, replaceWith: "clear"},
             {name: "sandy", multiplier: 0.8},
-            {name: "scorched", multiplier: 0.7, replaceWith: null},
-            {name: "seared", multiplier: 0.7, replaceWith: null},
+            {name: "scorched", multiplier: 0.7, replaceWith: "clear"},
+            {name: "seared", multiplier: 0.7, replaceWith: "clear"},
         ]
     },
     wind: {
@@ -351,16 +351,16 @@ const stats = {
         statusEffects: [],
         synergies: [
             {name: "freezing", multiplier: 1.2, replaceWith: "frozen"},
-            {name: "petrified", multiplier: 1.2, replaceWith: null},
+            {name: "petrified", multiplier: 1.2, replaceWith: "clear"},
             {name: "scorched", multiplier: 1.175},
             {name: "seared", multiplier: 1.175},
             {name: "snowy", multiplier: 1.1, replaceWith: "frozen"},
             {name: "charred", multiplier: 1.1},
-            {name: "soaked", multiplier: 0.9, replaceWith: null},
-            {name: "burning", multiplier: 0.9, replaceWith: null},
-            {name: "sandy", multiplier: 0.9, replaceWith: null},
+            {name: "soaked", multiplier: 0.9, replaceWith: "clear"},
+            {name: "burning", multiplier: 0.9, replaceWith: "clear"},
+            {name: "sandy", multiplier: 0.9, replaceWith: "clear"},
             {name: "singed", multiplier: 0.9},
-            {name: "poisoned", multiplier: 0.9, replaceWith: null},
+            {name: "poisoned", multiplier: 0.9, replaceWith: "clear"},
         ]
     },
     wood: {

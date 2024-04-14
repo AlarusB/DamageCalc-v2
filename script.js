@@ -3,12 +3,16 @@
 
 const spells = {
     blast: (params) => {
-        const { level, power, magic, amount } = params;
+        const { level, power, magic, amount, ultimateArt } = params;
         console.log(amount);
         let damage = magic.damage * (level + 19 + power);
         if (amount > 1)
         {
             damage *= (1.05/amount + 0.05);
+        }
+        if (ultimateArt)
+        {
+            damage *= 1.3;
         }
         return damage;
     },
@@ -108,7 +112,7 @@ function calculateSynergy(magic, targetStatus, existingStatus)
         if (targetStatus == synergy.name)
         {
             synergyDamage = synergy.multiplier;
-            if (synergy.replaceWith == null && synergy.name == existingStatus)
+            if (synergy.replaceWith == "clear" && synergy.name == existingStatus)
             {
                 statusResult = "none";
             }
@@ -134,13 +138,12 @@ function updateResult()
         intensity: Number($('#intensity').val()),
         amount: Number($('#amount').val()),
         charge: Number($('#charge').val()),
-        ultimateArt: Boolean($('#ultimateArt').val()),
+        ultimateArt: Boolean($('#ultimateArt').prop('checked')),
         targetStatus: String($('#targetStatus').val()),
         shape: String($('#shape').val()),
     };
     // Restrict vitality
     $('#vitality').val(Math.min(params.vitality, params.level*2));
-
 
     const vitReduction = calculateVitalityReduction(params.level, params.vitality);
     const spellDamage = spells[params.spell](params);
