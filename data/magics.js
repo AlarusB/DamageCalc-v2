@@ -232,8 +232,6 @@ const stats = {
             {name: "crysallized", multiplier: 1.1},
             {name: "sandy", multiplier: 1.1},
             {name: "melting", multiplier: 1.1},
-            {name: "scorched", multiplier: 1.1},
-            {name: "seared", multiplier: 1.1},
             {name: "corroding", multiplier: 1.1},
         ]
     },
