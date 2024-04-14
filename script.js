@@ -194,3 +194,6 @@ function updateResult()
 $('#level, #vitality, #power, #intensity, #magic, #spell, #amount, #shape, #ultimateArt, #charge, #targetStatus, #targetLevel, #targetDefense, #targetVitality, #armorPiercing').on('input', function() {
     updateResult();
 });
+
+// Run once at startup
+updateResult();
