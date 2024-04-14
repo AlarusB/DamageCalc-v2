@@ -181,7 +181,7 @@ function updateResult()
     $('#output_dot_damage').text(dotDamage + " (" + statusName + ")");
     $('#output_total_damage').text(attackDamage + dotDamage);
 
-    let fullSynDamage = Math.floor(attackDamage * synergyDamage);
+    let fullSynDamage = Math.floor(spellDamage * vitReduction * piercingBoost * synergyDamage);
     const newDoTDamage = calculateDoT({ damage: fullSynDamage, intensity: params.intensity, statusName: statusResult});
 
 
