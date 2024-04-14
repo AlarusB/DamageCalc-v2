@@ -77,14 +77,18 @@ function calculateVitalityReduction(level, vitality) {
 function calculateSubStat(value)
 {
     let val = 0.01 * (1.35 * (( ((16 * Math.log(0.1*value+4)**3)*0.09+(0.15*value)) / (0.1+0.15*MAX_LEVEL**0.5) ) - 0.79 ));
+    console.log(val);
     return val;
 }
 
 function calculateArmorPiercing(armorPiercing, targetDefense, targetLevel, targetVitality)
 {
-    
-    let increase = calculateSubStat(armorPiercing) * targetDefense / (calculateBaseHP(targetLevel) + (targetVitality*HP_PER_VIT) + targetDefense - targetDefense) / 4;
-    return 1 + increase;
+    let increase = 1;
+    if (armorPiercing > 0)
+    {
+        increase += calculateSubStat(armorPiercing) * targetDefense / (calculateBaseHP(targetLevel) + (targetVitality*HP_PER_VIT) + targetDefense - targetDefense) / 4;
+    }
+    return increase;
 }
 
 function findStatus(magic)
@@ -181,7 +185,7 @@ function updateResult()
     $('#output_dot_damage').text(dotDamage + " (" + statusName + ")");
     $('#output_total_damage').text(attackDamage + dotDamage);
 
-    let fullSynDamage = Math.floor(spellDamage * vitReduction * piercingBoost * synergyDamage);
+    let fullSynDamage = Math.floor(attackDamage * synergyDamage);
     const newDoTDamage = calculateDoT({ damage: fullSynDamage, intensity: params.intensity, statusName: statusResult});
 
 
