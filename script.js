@@ -177,7 +177,7 @@ function updateResult()
     const spellDamage = spells[params.spell](params);
     const attackDamage = Math.floor(spellDamage * vitReduction * piercingBoost);
     const statusName = findStatus(params.magic);
-    const dotDamage = calculateDoT({ damage: attackDamage * vitReduction, intensity: params.intensity, statusName: statusName});
+    const dotDamage = calculateDoT({ damage: attackDamage, intensity: params.intensity, statusName: statusName});
 
     const [synergyDamage, statusResult] = calculateSynergy(params.magic, params.targetStatus, statusName);
 
