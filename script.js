@@ -76,15 +76,19 @@ function calculateVitalityReduction(level, vitality) {
 
 function calculateSubStat(value)
 {
-    let val = 0.01 * (1.35 * (( ((16 * Math.log(0.1*value+4)**3)*0.09+(0.15*value)) / (0.1+0.15*MAX_LEVEL**0.5) ) - 0.79 ));
-    console.log(val);
-    return val;
+    let result = 0;
+    if (value != 0)
+    {
+        result = 0.01 * (1.35 * (( ((16 * Math.log(0.1*value+4)**3)*0.09+(0.15*value)) / (0.1+0.15*MAX_LEVEL**0.5) ) - 0.79 ));
+    }
+    // console.log(val);
+    return result;
 }
 
 function calculateArmorPiercing(armorPiercing, targetDefense, targetLevel, targetVitality)
 {
     let increase = 1;
-    if (armorPiercing > 0)
+    if (armorPiercing != 0)
     {
         increase += calculateSubStat(armorPiercing) * targetDefense / (calculateBaseHP(targetLevel) + (targetVitality*HP_PER_VIT) + targetDefense - targetDefense) / 4;
     }
@@ -112,12 +116,14 @@ function calculateDoT(params)
     const { damage, intensity, statusName } = params;
     let dotDamage = 0;
     const statusInfo = effects[statusName];
-    const INTENSITY_FOR_TICK = 28;
+    const INTENSITY_EFFICENCY = 4; // 4x
+    let statusDuration = statusInfo.duration;
     if (statusInfo.type == 'DoT')
     {
-        dotDamage = Math.floor(damage * statusInfo.damagePerTick) * statusInfo.duration;
+        statusDuration = Math.floor(statusInfo.duration * (1+calculateSubStat(intensity) * INTENSITY_EFFICENCY));
+        dotDamage = Math.floor(damage * statusInfo.damagePerTick) * statusDuration;
     }
-    return dotDamage;
+    return [dotDamage, statusDuration];
 }
 
 function calculateSynergy(magic, targetStatus, existingStatus)
@@ -177,21 +183,25 @@ function updateResult()
     const spellDamage = spells[params.spell](params);
     const attackDamage = Math.floor(spellDamage * vitReduction * piercingBoost);
     const statusName = findStatus(params.magic);
-    const dotDamage = calculateDoT({ damage: attackDamage, intensity: params.intensity, statusName: statusName});
+    const [dotDamage, statusDuration] = calculateDoT({ damage: attackDamage, intensity: params.intensity, statusName: statusName});
 
     const [synergyDamage, statusResult] = calculateSynergy(params.magic, params.targetStatus, statusName);
 
-    $('#output_base_damage').text(attackDamage);
-    $('#output_dot_damage').text(dotDamage + " (" + statusName + ")");
-    $('#output_total_damage').text(attackDamage + dotDamage);
-
     let fullSynDamage = Math.floor(attackDamage * synergyDamage);
-    const newDoTDamage = calculateDoT({ damage: fullSynDamage, intensity: params.intensity, statusName: statusResult});
+    const [newDoTDamage, newStatusDuration] = calculateDoT({ damage: fullSynDamage, intensity: params.intensity, statusName: statusResult});
+    if (synergyDamage > 1)
+    {
+        $('#output_base_damage').text(fullSynDamage + "! (+"+(fullSynDamage-attackDamage)+")");
+        $('#output_total_damage').text((fullSynDamage + newDoTDamage) + " (+"+(fullSynDamage + newDoTDamage-attackDamage-dotDamage)+")");
+    }
+    else
+    {
+        $('#output_base_damage').text(fullSynDamage);
+        $('#output_total_damage').text(fullSynDamage + newDoTDamage);
+    }
+    $('#output_dot_damage').text(newStatusDuration+"x"+(newDoTDamage/newStatusDuration)+" ("+newDoTDamage +")" + " (" + statusResult + ")");
 
 
-    $('#output_synergy_damage').text(fullSynDamage);
-    $('#output_synergy_dot_damage').text(newDoTDamage + " (" + statusResult + ")");
-    $('#output_synergy_total_damage').text(fullSynDamage + newDoTDamage);
 }
 
 // Input Listeners

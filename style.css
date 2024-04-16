@@ -31,4 +31,6 @@ html {
 
 .flex {
     display: flex;
+    justify-content: center;
+    gap: 5px;
 }
