@@ -117,10 +117,9 @@ function calculateDoT(params)
     let dotDamage = 0;
     const statusInfo = effects[statusName];
     const INTENSITY_EFFICENCY = 4; // 4x
-    let statusDuration = statusInfo.duration;
+    let statusDuration = Math.floor(statusInfo.duration * (1+calculateSubStat(intensity) * INTENSITY_EFFICENCY));
     if (statusInfo.type == 'DoT')
     {
-        statusDuration = Math.floor(statusInfo.duration * (1+calculateSubStat(intensity) * INTENSITY_EFFICENCY));
         dotDamage = Math.floor(damage * statusInfo.damagePerTick) * statusDuration;
     }
     return [dotDamage, statusDuration];
