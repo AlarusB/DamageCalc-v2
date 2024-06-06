@@ -113,11 +113,10 @@ function findStatus(magic)
 
 function calculateDoT(params)
 {
-    const { damage, intensity, statusName } = params;
+    const { damage, statusName } = params;
     let dotDamage = 0;
     const statusInfo = effects[statusName];
-    const INTENSITY_EFFICENCY = 4; // 4x
-    let statusDuration = Math.floor(statusInfo.duration * (1+calculateSubStat(intensity) * INTENSITY_EFFICENCY));
+    let statusDuration = statusInfo.duration;
     if (statusInfo.type == 'DoT')
     {
         dotDamage = Math.floor(damage * statusInfo.damagePerTick) * statusDuration;
@@ -161,7 +160,6 @@ function updateResult()
         armorPiercing: Number($('#armorPiercing').val()),
         magic: stats[String($('#magic').val())],
         spell: String($('#spell').val()),
-        intensity: Number($('#intensity').val()),
         amount: Number($('#amount').val()),
         charge: Number($('#charge').val()),
         ultimateArt: Boolean($('#ultimateArt').prop('checked')),
@@ -182,16 +180,16 @@ function updateResult()
     const spellDamage = spells[params.spell](params);
     const attackDamage = Math.floor(spellDamage * vitReduction * piercingBoost);
     const statusName = findStatus(params.magic);
-    const [dotDamage, statusDuration] = calculateDoT({ damage: attackDamage, intensity: params.intensity, statusName: statusName});
+    const [dotDamage, statusDuration] = calculateDoT({ damage: attackDamage, statusName: statusName});
 
     const [synergyDamage, statusResult] = calculateSynergy(params.magic, params.targetStatus, statusName);
 
     let fullSynDamage = Math.floor(attackDamage * synergyDamage);
-    const [newDoTDamage, newStatusDuration] = calculateDoT({ damage: fullSynDamage, intensity: params.intensity, statusName: statusResult});
+    const [newDoTDamage, newStatusDuration] = calculateDoT({ damage: fullSynDamage, statusName: statusResult});
     if (synergyDamage > 1)
     {
-        $('#output_base_damage').text(fullSynDamage + "! (+"+(fullSynDamage-attackDamage)+")");
-        $('#output_total_damage').text((fullSynDamage + newDoTDamage) + " (+"+(fullSynDamage + newDoTDamage-attackDamage-dotDamage)+")");
+        $('#output_base_damage').text("+"+fullSynDamage + " ("+(fullSynDamage-attackDamage)+")");
+        $('#output_total_damage').text((fullSynDamage + newDoTDamage) + " ("+(fullSynDamage + newDoTDamage-attackDamage-dotDamage)+")");
     }
     else
     {
