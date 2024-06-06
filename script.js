@@ -43,14 +43,14 @@ const spells = {
 };
 
 function calculateDamage(params, modifiers = {}) {
-    const { level, power, magic, amount = 1, placed = false, size = 100, ultimateArt = false } = params;
+    const { level, power, magic, amount = 1, placed = false, size = 100, ultimateArt = false, charge = 0} = params;
     const baseMultiplier = modifiers.baseMultiplier || 1;
     const levelMultiplier = modifiers.levelMultiplier || 1;
     const nonPowerMultiplier = modifiers.nonPowerMultiplier || 1;
     const ultMultiplier = modifiers.ultMultiplier || 1.2;
     const sizeScaling = modifiers.sizeScaling || 0.003;
 
-    let damage = magic.damage * baseMultiplier * ( nonPowerMultiplier * (levelMultiplier * level + 19) + power) * (1 + sizeScaling * (100 - size));
+    let damage = magic.damage * baseMultiplier * ( nonPowerMultiplier * (levelMultiplier * level + 19) + power) * (1 + sizeScaling * (100 - size)) * (1 + (charge/3) / 100);
 
     if (amount > 1 && modifiers.amountScaling && !(modifiers.amountCondition && amount == modifiers.amountCondition.amount)) {
         const amountFormula = modifiers.amountFormula || ((amount) => (1.05 / amount + 0.05));
@@ -60,6 +60,7 @@ function calculateDamage(params, modifiers = {}) {
     if (placed && modifiers.placed) {
         damage *= modifiers.placed;
     }
+
 
     if (ultimateArt) {
         damage *= ultMultiplier;
