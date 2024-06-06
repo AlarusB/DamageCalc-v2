@@ -2,70 +2,83 @@
 // statusEffects called effects
 
 const spells = {
-    blast: (params) => {
-        const { level, power, magic, amount, ultimateArt, size = 100 } = params;
-        // console.log(amount);
-        let damage = magic.damage * (level + 19 + power) * (1 + 0.004*(100-size));
-        if (amount > 1)
+    blast: (params) => calculateDamage(params,
         {
-            damage *= (1.05/amount + 0.05);
-        }
-        if (ultimateArt)
+            amountScaling: true,
+            ultMultiplier: 1.3 
+        }),
+    explosion: (params) => calculateDamage(params,
+        { 
+            sizeScaling: 0.004,
+            amountScaling: true,
+            placed: 0.6,
+            amountFormula: (amount) => 2 / (1 + amount) 
+        }),
+    beam: (params) => calculateDamage(params,
+        { 
+            amountScaling: true,
+            baseMultiplier: 0.65,
+            amountCondition: { amount: 2, multiplier: 1.4 },
+            amountFormula: (amount) => 2 / (1 + amount) 
+        }),
+    snare: (params) => calculateDamage(params,
+        { 
+            amountScaling: false,
+            levelMultiplier: 0.74
+         }),
+    pulsar: (params) => calculateDamage(params,
+         {
+            amountScaling: false,
+         }),
+    javelin: (params) => calculateDamage(params,
+        { 
+            amountScaling: false,
+            nonPowerMultiplier: 1.5 
+        }),
+    surge: (params) => calculateDamage(params,
         {
-            damage *= 1.3;
-        }
-        return damage;
-    },
-    explosion: (params) => {
-        const { level, power, magic, amount = 1, placed = false, size = 100 } = params;
-        let damage = magic.damage * (level + 19 + power) * (1 + 0.004*(100-size));
-        if (placed)
-        {
-            damage *= 0.6;
-        }
-        if (amount > 1)
-        {
-            damage *= 2/(1 + amount);
-        }
-        return damage;
-    },
-    beam: (params) => {
-        const { level, power, magic, amount = 1, placed = false, size = 100 } = params;
-        let damage = magic.damage * 0.65 * (level + 19 + power) * (1 + 0.004*(100-size));
-        if (amount == 2)
-        {
-            damage *= 1.4;
-        }
-        return damage;
-    },
-    snare: (params) => {
-        const { level, power, magic, amount = 1, placed = false, size = 100 } = params;
-        let damage = magic.damage * (0.74*level + 19 + power) * (1 + 0.004*(100-size));
-        return damage;
-    },
-    pulsar: (params) => {
-        const { level, power, magic, amount = 1, placed = false, size = 100 } = params;
-        let damage = magic.damage * (level + 19 + power) * (1 + 0.004*(100-size));
-        return damage;
-    },
-    javelin: (params) => {
-        const { level, power, magic, amount = 1, placed = false, size = 100 } = params;
-        let damage = magic.damage * 1.25 (level + 19 + power) * (1 + 0.004*(100-size));
-        return damage;
-    },
-    surge: (params) => {
-        const { level, power, magic, amount = 1, placed = false, size = 100 } = params;
-        let damage = magic.damage * 0.15 * (level + 19 + power) * (1 + 0.004*(100-size));
-        return damage;
+             amountScaling: false,
+             baseMultiplier: 0.2
+        })
+};
+
+function calculateDamage(params, modifiers = {}) {
+    const { level, power, magic, amount = 1, placed = false, size = 100, ultimateArt = false } = params;
+    const baseMultiplier = modifiers.baseMultiplier || 1;
+    const levelMultiplier = modifiers.levelMultiplier || 1;
+    const nonPowerMultiplier = modifiers.nonPowerMultiplier || 1;
+    const ultMultiplier = modifiers.ultMultiplier || 1.2;
+    const sizeScaling = modifiers.sizeScaling || 0.003;
+
+    let damage = magic.damage * baseMultiplier * ( nonPowerMultiplier * (levelMultiplier * level + 19) + power) * (1 + sizeScaling * (100 - size));
+
+    if (amount > 1 && modifiers.amountScaling && !(modifiers.amountCondition && amount == modifiers.amountCondition.amount)) {
+        const amountFormula = modifiers.amountFormula || ((amount) => (1.05 / amount + 0.05));
+        damage *= amountFormula(amount);
     }
+
+    if (placed && modifiers.placed) {
+        damage *= modifiers.placed;
+    }
+
+    if (ultimateArt) {
+        damage *= ultMultiplier;
+    }
+
+    if (modifiers.amountCondition && amount == modifiers.amountCondition.amount) {
+        damage *= modifiers.amountCondition.multiplier;
+    }
+
+    return damage;
 }
 
-const MAX_LEVEL = 136;
+const MAX_LEVEL = 140;
 const HP_PER_VIT = 4;
+const HP_PER_LEVEL = 7
 
 function calculateBaseHP(level)
 {
-    return 93 + level*7;
+    return 93 + level*HP_PER_LEVEL;
 }
 
 function calculateVitalityReduction(level, vitality) {
@@ -172,9 +185,16 @@ function updateResult()
         
     };
     // Restrict vitality
-    $('#vitality').val(Math.min(params.vitality, params.level*2));
-    $('#targetVitality').val(Math.min(params.targetVitality, params.targetLevel*2));
-
+    params.vitality = Math.min(params.vitality, params.level*2);
+    params.targetVitality = Math.min(params.targetVitality, params.targetLevel*2)
+    $('#vitality').val(params.vitality);
+    $('#targetVitality').val(params.targetVitality);
+    
+    if (params.size < 20)
+    {
+        params.size = 20;
+        $('#size').val(params.size);
+    }
 
     const vitReduction = calculateVitalityReduction(params.level, params.vitality);
     const piercingBoost = calculateArmorPiercing(params.armorPiercing, params.targetDefense, params.targetLevel, params.targetVitality);
@@ -183,11 +203,7 @@ function updateResult()
     const statusName = findStatus(params.magic);
     const [dotDamage, statusDuration] = calculateDoT({ damage: attackDamage, statusName: statusName});
 
-    if (params.size < 20)
-    {
-        $('#size').val(20);
-        params.size = 20;
-    }
+
 
     const [synergyDamage, statusResult] = calculateSynergy(params.magic, params.targetStatus, statusName);
 
@@ -204,14 +220,10 @@ function updateResult()
         $('#output_total_damage').text(fullSynDamage + newDoTDamage);
     }
     $('#output_dot_damage').text(newStatusDuration+"x"+(newDoTDamage/newStatusDuration)+" ("+newDoTDamage +")" + " (" + statusResult + ")");
-
-
 }
 
 // Input Listeners
-$('#level, #vitality, #power, #size, #magic, #spell, #amount, #shape, #ultimateArt, #charge, #targetStatus, #targetLevel, #targetDefense, #targetVitality, #armorPiercing').on('input', function() {
-    updateResult();
-});
+$('#level, #vitality, #power, #size, #magic, #spell, #amount, #shape, #ultimateArt, #charge, #targetStatus, #targetLevel, #targetDefense, #targetVitality, #armorPiercing').on('input', updateResult);
 
 // Run once at startup
 updateResult();
