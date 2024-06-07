@@ -1,49 +1,103 @@
 // magics called stats
 // statusEffects called effects
 
+
+
+
 const spells = {
-    blast: (params) => calculateDamage(params,
+    blast: {
+        calculate: (params) => calculateDamage(params,
         {
             amountScaling: true,
             ultMultiplier: 1.3 
         }),
-    explosion: (params) => calculateDamage(params,
+        shapes: {
+            "Arrow": 1,
+            "Bird": 1,
+            "Cube": 1,
+            "Dragonhead": 1.1,
+            "Drill": 1,
+            "Fist": 1,
+            "Greatsword": 1.1,
+            "Hammer": 1,
+            "Hand": 1,
+            "Horizontal Slash": 0.9,
+            "Phoenix": 1.1,
+            "Shark": 1,
+            "Sharkhead": 1.1,
+            "Shield": 0.9,
+            "Spear": 0.85,
+            "Sphere": 1,
+            "Spikeball": 1.1,
+            "Sword": 0.9,
+            "Trident": 0.85,
+            "Vertical Slash": 0.9,
+            "X Slash": 0.8
+        }},
+    explosion: {
+        calculate: (params) => calculateDamage(params,
         { 
             sizeScaling: 0.004,
             amountScaling: true,
             placed: 0.6,
             amountFormula: (amount) => 2 / (1 + amount) 
         }),
-    beam: (params) => calculateDamage(params,
+        shapes: {
+            Bird: 1,
+            Fist: 0.9,
+            Greatsword: 1.1,
+            Hammer: 1,
+            Phoenix: 1.1,
+            Spear: 0.85,
+            Spikeball: 1.1,
+            Sword: 0.9,
+            Trident: 0.85
+        }},
+    beam: {
+        calculate: (params) => calculateDamage(params,
         { 
             amountScaling: true,
             baseMultiplier: 0.65,
             amountCondition: { amount: 2, multiplier: 1.4 },
             amountFormula: (amount) => 2 / (1 + amount) 
         }),
-    snare: (params) => calculateDamage(params,
+        shapes: {
+        }},
+    snare: {
+        calculate:  (params) => calculateDamage(params,
         { 
             amountScaling: false,
             levelMultiplier: 0.74
-         }),
-    pulsar: (params) => calculateDamage(params,
+        }),
+        shapes: {
+        }},
+    pulsar:{
+        calculate: (params) => calculateDamage(params,
          {
             amountScaling: false,
-         }),
-    javelin: (params) => calculateDamage(params,
+        }),
+        shapes: {
+        }},
+    javelin: {
+        calculate: (params) => calculateDamage(params,
         { 
             amountScaling: false,
             nonPowerMultiplier: 1.5 
         }),
-    surge: (params) => calculateDamage(params,
+        shapes: {
+        }},
+    surge: {
+        calculate: (params) => calculateDamage(params,
         {
-             amountScaling: false,
-             baseMultiplier: 0.2
-        })
+            amountScaling: false,
+            baseMultiplier: 0.2
+        }),
+        shapes: {
+        }}
 };
 
 function calculateDamage(params, modifiers = {}) {
-    const { level, power, magic, amount = 1, placed = false, size = 100, ultimateArt = false, charge = 0} = params;
+    const { level, power, magic, amount = 1, placed = false, size = 100, ultimateArt = false, charge = 0, shape} = params;
     const baseMultiplier = modifiers.baseMultiplier || 1;
     const levelMultiplier = modifiers.levelMultiplier || 1;
     const nonPowerMultiplier = modifiers.nonPowerMultiplier || 1;
@@ -68,6 +122,12 @@ function calculateDamage(params, modifiers = {}) {
 
     if (modifiers.amountCondition && amount == modifiers.amountCondition.amount) {
         damage *= modifiers.amountCondition.multiplier;
+    }
+
+    // Apply shape multiplier
+    const spellShapes = spells[params.spell].shapes;
+    if (shape && spellShapes[shape]) {
+        damage *= spellShapes[shape];
     }
 
     return damage;
@@ -165,6 +225,25 @@ function calculateSynergy(magic, targetStatus, existingStatus)
     return [synergyDamage, statusResult];
 }
 
+function updateShapeOptions(selectedSpell) {
+    const shapeDropdown = $('#shape');
+    shapeDropdown.empty();
+    shapeDropdown.append('<option value="none">None</option>');
+
+    if (spells[selectedSpell]) {
+        const shapes = spells[selectedSpell].shapes;
+        for (const shape in shapes) {
+            if (shapes.hasOwnProperty(shape)) {
+                const damageIncrease = shapes[shape] !== 1 ? ` (${shapes[shape] * 100 - 100 > 0 ? '+' : ''}${(shapes[shape] * 100 - 100).toFixed(0)}%)` : ''; // Calculate damage increase and display "+" only if positive
+                shapeDropdown.append(`<option value="${shape}">${shape}${damageIncrease}</option>`);
+            }
+        }
+    }
+}
+
+
+
+
 function updateResult()
 {
     const params = {
@@ -199,7 +278,7 @@ function updateResult()
 
     const vitReduction = calculateVitalityReduction(params.level, params.vitality);
     const piercingBoost = calculateArmorPiercing(params.armorPiercing, params.targetDefense, params.targetLevel, params.targetVitality);
-    const spellDamage = spells[params.spell](params);
+    const spellDamage = spells[params.spell].calculate(params);
     const attackDamage = Math.floor(spellDamage * vitReduction * piercingBoost);
     const statusName = findStatus(params.magic);
     const [dotDamage, statusDuration] = calculateDoT({ damage: attackDamage, statusName: statusName});
@@ -225,6 +304,7 @@ function updateResult()
 
 // Input Listeners
 $('#level, #vitality, #power, #size, #magic, #spell, #amount, #shape, #ultimateArt, #charge, #targetStatus, #targetLevel, #targetDefense, #targetVitality, #armorPiercing').on('input', updateResult);
-
+$('#spell').on('change', () => updateShapeOptions($('#spell').val()));
 // Run once at startup
 updateResult();
+updateShapeOptions($('#spell').val());
