@@ -21,16 +21,15 @@ html {
     border: 1px solid black;
     box-shadow: inset 0px 0px 0px 2px #0061bc;
 }
-.damageFrame  input[type=submit] {
-    color: white;
-    background-color: #00407F;
-    border: 1px solid white;
-    padding: 10px;
-    -webkit-text-stroke-width: 1px black;
-}
 
 .flex {
     display: flex;
     justify-content: center;
+    gap: 5px;
+}
+
+.flexleft {
+    display: flex;
+    justify-content: left;
     gap: 5px;
 }

@@ -17,118 +17,119 @@
     </head>
     <body>
         <div class="flex">
-            <form class="damageFrame">
-                <h2>Player Info</h2>
-                <label for="level">Level:</label>
-                <input type="number" id="level" name="level" value="1" min="1" max="600" required>
-
-                <label for="vitality">Vitality:</label>
-                <input type="number" id="vitality" value="0" min="0" max="1200" name="vitality" required>
-                
-                <label for="power">Power:</label>
-                <input type="number" id="power" value="0" name="power" required>
-
-                <label for="armorPiercing">Armor Piercing:</label>
-                <input type="number" id="armorPiercing" value="0" name="armorPiercing" required>
-
-                <h2>Magic Info</h2>
-                <label for="magic">Choose a magic:</label>
-                <select id="magic" name="magic">
-                  <option value="acid">Acid</option>
-                  <option value="ash">Ash</option>
-                  <option value="crystal">Crystal</option>
-                  <option value="earth">Earth</option>
-                  <option value="explosion">Explosion</option>
-                  <option value="fire">Fire</option>
-                  <option value="glass">Glass</option>
-                  <option value="ice">Ice</option>
-                  <option value="light">Light</option>
-                  <option value="lightning">Lightning</option>
-                  <option value="magma">Magma</option>
-                  <option value="metal">Metal</option>
-                  <option value="plasma">Plasma</option>
-                  <option value="poison">Poison</option>
-                  <option value="sand">Sand</option>
-                  <option value="shadow">Shadow</option>
-                  <option value="snow">Snow</option>
-                  <option value="water">Water</option>
-                  <option value="wind">Wind</option>
-                  <option value="wood">Wood</option>
-                </select>
-              
-                <label for="spell">Spell:</label>
-                <select id="spell" name="spell">
-                  <option value="blast">Blast</option>
-                  <option value="explosion">Explosion</option>
-                  <option value="beam">Beam</option>
-                  <option value="snare">Snare</option>
-                  <option value="javelin">Javelin</option>
-                  <option value="pulsar">Pulsar</option>
-                  <option value="surge">Surge</option>
-                </select>
-
-                <div id="amountDisplay">
-                    <label for="amount">Amount:</label>
-                    <input type="number" id="amount" min="1" max="20" name="amount">
+            <form class="damageFrame flexleft">
+                <div>
+                    <h2>Player Info</h2>
+                    <label for="level">Level:</label>
+                    <input type="number" id="level" name="level" value="1" min="1" max="600" required>
+    
+                    <label for="vitality">Vitality:</label>
+                    <input type="number" id="vitality" value="0" min="0" max="1200" name="vitality" required>
+                    
+                    <label for="power">Power:</label>
+                    <input type="number" id="power" value="0" name="power" required>
+    
+                    <label for="armorPiercing">Armor Piercing:</label>
+                    <input type="number" id="armorPiercing" value="0" name="armorPiercing" required>
+    
+                    <h2>Magic Info</h2>
+                    <label for="magic">Choose a magic:</label>
+                    <select id="magic" name="magic">
+                      <option value="acid">Acid</option>
+                      <option value="ash">Ash</option>
+                      <option value="crystal">Crystal</option>
+                      <option value="earth">Earth</option>
+                      <option value="explosion">Explosion</option>
+                      <option value="fire">Fire</option>
+                      <option value="glass">Glass</option>
+                      <option value="ice">Ice</option>
+                      <option value="light">Light</option>
+                      <option value="lightning">Lightning</option>
+                      <option value="magma">Magma</option>
+                      <option value="metal">Metal</option>
+                      <option value="plasma">Plasma</option>
+                      <option value="poison">Poison</option>
+                      <option value="sand">Sand</option>
+                      <option value="shadow">Shadow</option>
+                      <option value="snow">Snow</option>
+                      <option value="water">Water</option>
+                      <option value="wind">Wind</option>
+                      <option value="wood">Wood</option>
+                    </select>
+                  
+                    <label for="spell">Spell:</label>
+                    <select id="spell" name="spell">
+                      <option value="blast">Blast</option>
+                      <option value="explosion">Explosion</option>
+                      <option value="beam">Beam</option>
+                      <option value="snare">Snare</option>
+                      <option value="javelin">Javelin</option>
+                      <option value="pulsar">Pulsar</option>
+                      <option value="surge">Surge</option>
+                    </select>
+    
+                    <div id="amountDisplay">
+                        <label for="amount">Amount:</label>
+                        <input type="number" id="amount" min="1" max="20" name="amount">
+                    </div>
+    
+                    <div id="shapeDisplay">
+                        <label for="shape">Shape:</label>
+                        <select id="shape" name="shape" required>
+                            <option value="none">None</option>
+                        </select>
+                    </div>
+    
+                    <div id="sizeDisplay">
+                        <label for="size">Size:</label>
+                        <input type="range" min="0" max="100" step="10" id="size" name="size">
+                    </div>
+    
+                    <div id="ultimateArtDisplay">
+                        <label for="ultimateArt">Ultimate Art:</label>
+                        <input type="checkbox" id="ultimateArt" name="ultimateArt">
+                    </div>
+    
+                    <label for="charge">Charge %:</label>
+                    <input type="range" min="0" max="100" step="10" id="charge" name="charge">
                 </div>
-
-                <div id="shapeDisplay">
-                    <label for="shape">Shape:</label>
-                    <select id="shape" name="shape" required>
+                <div>
+                    <h2>Target Info</h2>
+                    <label for="targetDefense">Target Defense:</label>
+                    <input type="number" id="targetDefense" value="0" min="0" name="targetDefense" required>
+    
+                    <label for="targetLevel">Target Level:</label>
+                    <input type="number" id="targetLevel" value="1" min="1" max="600" name="targetLevel" required>
+    
+                    <label for="targetVitality">Target Vitality:</label>
+                    <input type="number" id="targetVitality" value="0" min="0" max="1200" name="targetVitality" required>
+    
+                    <label for="targetStatus">Target Status:</label>
+                    <select id="targetStatus" name="targetStatus" required>
                         <option value="none">None</option>
+                        <option value="bleeding">Bleeding</option>
+                        <option value="burning">Burning</option>
+                        <option value="scorched">Scorched</option>
+                        <option value="melting">Melting</option>
+                        <option value="corroding">Corroding</option>
+                        <option value="poisoned">Poisoned</option>
+                        <option value="singed">Singed</option>
+                        <option value="scalded">Scalded</option>
+                        <option value="freezing">Freezing</option>
+                        <option value="charred">Charred</option>
+                        <option value="soaked">Soaked</option>
+                        <option value="crystallized">Crystallized x3</option>
+                        <option value="drained">Drained</option>
+                        <option value="seared">Seared</option>
+                        <option value="blinded">Blinded x5</option>
+                        <option value="sandy">Sandy</option>
+                        <option value="snowy">Snowy</option>
+                        <option value="frozen">Frozen</option>
+                        <option value="petrified">Petrified</option>
+                        <option value="paralyzed">Paralyzed</option>
+                        <option value="sweating">Sweating</option>
                     </select>
                 </div>
-
-                <div id="sizeDisplay">
-                    <label for="size">Size:</label>
-                    <input type="range" min="0" max="100" step="10" id="size" name="size">
-                </div>
-
-                <div id="ultimateArtDisplay">
-                    <label for="ultimateArt">Ultimate Art:</label>
-                    <input type="checkbox" id="ultimateArt" name="ultimateArt">
-                </div>
-
-                <label for="charge">Charge %:</label>
-                <input type="range" min="0" max="100" step="10" id="charge" name="charge">
-
-                <h2>Target Info</h2>
-                <label for="targetDefense">Target Defense:</label>
-                <input type="number" id="targetDefense" value="0" min="0" name="targetDefense" required>
-
-                <label for="targetLevel">Target Level:</label>
-                <input type="number" id="targetLevel" value="1" min="1" max="600" name="targetLevel" required>
-
-                <label for="targetVitality">Target Vitality:</label>
-                <input type="number" id="targetVitality" value="0" min="0" max="1200" name="targetVitality" required>
-
-                <label for="targetStatus">Target Status:</label>
-                <select id="targetStatus" name="targetStatus" required>
-                    <option value="none">None</option>
-                    <option value="bleeding">Bleeding</option>
-                    <option value="burning">Burning</option>
-                    <option value="scorched">Scorched</option>
-                    <option value="melting">Melting</option>
-                    <option value="corroding">Corroding</option>
-                    <option value="poisoned">Poisoned</option>
-                    <option value="singed">Singed</option>
-                    <option value="scalded">Scalded</option>
-                    <option value="freezing">Freezing</option>
-                    <option value="charred">Charred</option>
-                    <option value="soaked">Soaked</option>
-                    <option value="crystallized">Crystallized x3</option>
-                    <option value="drained">Drained</option>
-                    <option value="seared">Seared</option>
-                    <option value="blinded">Blinded x5</option>
-                    <option value="sandy">Sandy</option>
-                    <option value="snowy">Snowy</option>
-                    <option value="frozen">Frozen</option>
-                    <option value="petrified">Petrified</option>
-                    <option value="paralyzed">Paralyzed</option>
-                    <option value="sweating">Sweating</option>
-                </select>
-
-                <!--<input type="submit" value="Submit">-->
             </form>
             <div class="results damageFrame">
                 <h2>Output</h2>
